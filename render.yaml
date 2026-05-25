@@ -1,0 +1,14 @@
+services:
+  - type: web
+    name: kvb-backend
+    env: python
+    plan: free
+    branch: main
+    buildCommand: |
+      npm install --prefix frontend
+      npm run build --prefix frontend
+      pip install -r requirements.txt
+    startCommand: gunicorn app:app --bind 0.0.0.0:$PORT
+    envVars:
+      - key: PYTHONUNBUFFERED
+        value: "1"
